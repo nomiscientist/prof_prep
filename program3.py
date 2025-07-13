@@ -5,22 +5,33 @@ palindrome or there is no solution return -1
 """
 
 def palindrome_index(s: str) -> int:
-    # Check if string is already a palindrome
-    if s == s[::-1]:
-        return -1
-    
-    # Iterate through string checking corresponding characters from start and end
-    for i in range(len(s)):
-        if s[i] != s[-(i+1)]:
-            # Check if removing character at index i makes it a palindrome
-            if s[i+1] == s[-(i+2)]:
-                return i
-            else:
-                return len(s) - 1 - i
-    return -1
+   left, right = 0, len(s) - 1
+
+   while left < right:
+      if s[left] != s[right]:
+         left += 1
+         right -= 1
+      else:
+         if is_palindrome_range(s, left + 1, right):
+            return left
+         if is_palindrome_range(s, left, right - 1):
+            return right
+      return -1
+   return -1
+
+def is_palindrome_range(s: str, i:int, j:int) -> bool:
+   while i < j:
+      if s[i] != s[j]:
+         return False
+      
+      i += 1
+      j -= 1
+
+   return True
+
 
 if __name__ == "__main__":
     # Test cases
-    print(palindrome_index("aaab"))  # Should print 3
-    print(palindrome_index("baa"))   # Should print 0
-    print(palindrome_index("eyee"))  # Should print 0
+    print(palindrome_index("aaab")) 
+    print(palindrome_index("baa"))  
+    print(palindrome_index("eyee"))
