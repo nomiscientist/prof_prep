@@ -8,7 +8,20 @@ to both numbers, M and B. Help him find the answer
 
 import math
 
-def count_common_divisor(m: int, b:int) -> int:
+def count_common_divisors(m: int, b:int) -> int:
+    g = math.gcd(m,b)
+    count = 0
 
-    gcd_value = math.gcd(m,b)
+    for i in range(1, int(g**0.5) + 1):
+        if g % i == 0:
+            count += 1
+            if i != g // i:
+                count += 1
+    return count
+
+# Example usage:
+M = 12  # Mehtab's points
+B = 18  # Balaj's points
+result = count_common_divisors(M, B)
+print(f"Number of common divisors for M={M}, B={B}: {result}")
 
